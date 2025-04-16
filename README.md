@@ -15,6 +15,9 @@ This project demonstrates the functionality of JPA/Hibernate Interceptors, Liste
 3. **Hibernate Interceptors**: Offer more comprehensive possibilities for manipulating entities during various database operations.
    Example: Implementation of the `Interceptor` interface
 
+4. **JPA Converters**: Allow for custom conversion between database column values and entity attribute values.
+   Example: Implementation of the `AttributeConverter` interface
+
 These mechanisms are used in the project to:
 - Automatically set timestamps for creation and updates
 - Create audit trails
