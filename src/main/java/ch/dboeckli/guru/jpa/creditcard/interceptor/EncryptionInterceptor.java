@@ -4,21 +4,20 @@ import ch.dboeckli.guru.jpa.creditcard.domain.CreditCard;
 import ch.dboeckli.guru.jpa.creditcard.service.EncryptionService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.hibernate.EmptyInterceptor;
+import org.hibernate.CallbackException;
+import org.hibernate.Interceptor;
 import org.hibernate.type.Type;
 import org.springframework.stereotype.Component;
-
-import java.io.Serializable;
 
 @Component
 @RequiredArgsConstructor
 @Slf4j
-public class EncryptionInterceptor extends EmptyInterceptor {
+public class EncryptionInterceptor implements Interceptor {
 
     private final EncryptionService encryptionService;
 
     @Override
-    public boolean onLoad(Object entity, Serializable id, Object[] state, String[] propertyNames, Type[] types) {
+    public boolean onLoad(Object entity, Object id, Object[] state, String[] propertyNames, Type[] types) {
         if (entity instanceof CreditCard) {
             for (int i = 0; i < propertyNames.length; i++) {
                 if ("creditCardNumber".equals(propertyNames[i])) {
@@ -36,7 +35,7 @@ public class EncryptionInterceptor extends EmptyInterceptor {
     }
 
     @Override
-    public boolean onSave(Object entity, Serializable id, Object[] state, String[] propertyNames, Type[] types) {
+    public boolean onPersist(Object entity, Object id, Object[] state, String[] propertyNames, Type[] types) throws CallbackException {
         if (entity instanceof CreditCard) {
             for (int i = 0; i < propertyNames.length; i++) {
                 if ("creditCardNumber".equals(propertyNames[i])) {
@@ -54,7 +53,7 @@ public class EncryptionInterceptor extends EmptyInterceptor {
     }
 
     @Override
-    public boolean onFlushDirty(Object entity, Serializable id, Object[] currentState, Object[] previousState, String[] propertyNames, Type[] types) {
+    public boolean onFlushDirty(Object entity, Object id, Object[] currentState, Object[] previousState, String[] propertyNames, Type[] types) {
         if (entity instanceof CreditCard) {
             boolean modified = false;
             for (int i = 0; i < propertyNames.length; i++) {
@@ -72,6 +71,5 @@ public class EncryptionInterceptor extends EmptyInterceptor {
         }
         return false;
     }
-
 
 }
