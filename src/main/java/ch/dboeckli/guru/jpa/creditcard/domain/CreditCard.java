@@ -1,9 +1,6 @@
 package ch.dboeckli.guru.jpa.creditcard.domain;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -14,6 +11,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
+@EntityListeners(CreditCardJPACallback.class)
 public class CreditCard {
 
     @Id
@@ -25,5 +23,8 @@ public class CreditCard {
     private String cvv;
 
     private String expirationDate;
+
+    @Convert(converter = CreditCardConverter.class)
+    private String secret;
 
 }

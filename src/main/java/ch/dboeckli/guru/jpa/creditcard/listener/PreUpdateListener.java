@@ -1,7 +1,7 @@
 package ch.dboeckli.guru.jpa.creditcard.listener;
 
 import ch.dboeckli.guru.jpa.creditcard.domain.CreditCard;
-import ch.dboeckli.guru.jpa.creditcard.service.EncryptionService;
+import ch.dboeckli.guru.jpa.creditcard.util.EncryptionUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.event.spi.PreUpdateEvent;
@@ -12,8 +12,6 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 @Slf4j
 public class PreUpdateListener implements PreUpdateEventListener {
-
-    private final EncryptionService encryptionService;
 
     @Override
     public boolean onPreUpdate(PreUpdateEvent event) {
@@ -35,7 +33,7 @@ public class PreUpdateListener implements PreUpdateEventListener {
             String currentCvv = (String) currentState[cvvIndex];
             if (currentCvv != null && !currentCvv.equals(creditCard.getCvv())) {
                 try {
-                    String encryptedCvv = encryptionService.encrypt(creditCard.getCvv());
+                    String encryptedCvv = EncryptionUtil.encrypt(creditCard.getCvv());
                     creditCard.setCvv(encryptedCvv); // Update the credit card with the encrypted CVV
                     currentState[cvvIndex] = encryptedCvv;
                     log.info("Successfully encrypted updated CVV for credit card: {}", creditCard.getId());

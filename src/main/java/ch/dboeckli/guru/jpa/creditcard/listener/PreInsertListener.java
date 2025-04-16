@@ -1,7 +1,7 @@
 package ch.dboeckli.guru.jpa.creditcard.listener;
 
 import ch.dboeckli.guru.jpa.creditcard.domain.CreditCard;
-import ch.dboeckli.guru.jpa.creditcard.service.EncryptionService;
+import ch.dboeckli.guru.jpa.creditcard.util.EncryptionUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.event.spi.PreInsertEvent;
@@ -12,8 +12,6 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 @Slf4j
 public class PreInsertListener implements PreInsertEventListener {
-
-    private final EncryptionService encryptionService;
 
     @Override
     public boolean onPreInsert(PreInsertEvent event) {
@@ -26,7 +24,7 @@ public class PreInsertListener implements PreInsertEventListener {
 
     private void encryptCvv(CreditCard creditCard, PreInsertEvent event) {
         try {
-            String encryptedCvv = encryptionService.encrypt(creditCard.getCvv());
+            String encryptedCvv = EncryptionUtil.encrypt(creditCard.getCvv());
 
             Object[] state = event.getState();
             int cvvIndex = getCvvIndex(event);

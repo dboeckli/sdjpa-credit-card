@@ -1,7 +1,7 @@
 package ch.dboeckli.guru.jpa.creditcard.listener;
 
 import ch.dboeckli.guru.jpa.creditcard.domain.CreditCard;
-import ch.dboeckli.guru.jpa.creditcard.service.EncryptionService;
+import ch.dboeckli.guru.jpa.creditcard.util.EncryptionUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.event.spi.PostLoadEvent;
@@ -12,8 +12,6 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 @Slf4j
 public class PostLoadListener implements PostLoadEventListener {
-
-    private final EncryptionService encryptionService;
 
     @Override
     public void onPostLoad(PostLoadEvent event) {
@@ -27,7 +25,7 @@ public class PostLoadListener implements PostLoadEventListener {
         try {
             String encryptedCvv = creditCard.getCvv();
             if (encryptedCvv != null && !encryptedCvv.isEmpty()) {
-                String decryptedCvv = encryptionService.decrypt(encryptedCvv);
+                String decryptedCvv = EncryptionUtil.decrypt(encryptedCvv);
                 creditCard.setCvv(decryptedCvv);
                 log.info("Successfully decrypted CVV for credit card: {}", creditCard.getId());
             }
