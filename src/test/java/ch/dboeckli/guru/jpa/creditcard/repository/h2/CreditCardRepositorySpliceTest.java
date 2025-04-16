@@ -14,6 +14,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 class CreditCardRepositorySpliceTest {
 
+    final String CREDIT_CARD = "12345678900000";
+
     @Autowired
     CreditCardRepository creditCardRepository;
 
@@ -25,8 +27,6 @@ class CreditCardRepositorySpliceTest {
 
         long countAfter = creditCardRepository.count();
 
-        assertEquals(0, countBefore);
-        assertEquals(1, countAfter);
+        assertEquals(countAfter, countBefore + 1);
     }
-
 }

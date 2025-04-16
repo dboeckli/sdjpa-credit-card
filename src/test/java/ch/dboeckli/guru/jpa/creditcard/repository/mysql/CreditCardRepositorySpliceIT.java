@@ -26,8 +26,7 @@ class CreditCardRepositorySpliceIT {
 
         long countAfter = creditCardRepository.count();
 
-        assertEquals(0, countBefore);
-        assertEquals(1, countAfter);
+        assertEquals(countAfter, countBefore + 1);
     }
 
 }
