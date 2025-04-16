@@ -1,0 +1,26 @@
+services:
+  mysql:
+    container_name: mysql
+    image: mysql:8.4.4
+    environment:
+      MYSQL_DATABASE: wordpressdb
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+      MYSQL_ROOT_PASSWORD: password
+    ports:
+      - "3306:3306"
+    expose:
+      - "3306"
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-ppassword" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    volumes:
+      - ./src/scripts/init-mysql.sql:/docker-entrypoint-initdb.d/init-mysql.sql:ro
+      #- mysql_data:/var/lib/mysql
+    command:
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci
+#volumes:
+#  mysql_data:

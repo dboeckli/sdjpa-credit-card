@@ -1,0 +1,10 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Spring6Application h2" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+    <option name="ACTIVE_PROFILES" value="h2" />
+    <module name="sdjpa-wordpress" />
+    <option name="SPRING_BOOT_MAIN_CLASS" value="ch.dboeckli.guru.jpa.wordpress.Spring6Application" />
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>

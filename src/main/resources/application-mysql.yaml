@@ -1,0 +1,75 @@
+spring:
+  application:
+    name: sdjpa-wordpress
+
+  docker:
+    compose:
+      file: compose-mysql.yaml
+      enabled: true
+      stop:
+        command: down
+
+  sql:
+    init:
+      mode: never
+
+  jpa:
+    database: mysql
+    hibernate:
+      ddl-auto: validate
+    defer-datasource-initialization: false
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true
+
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/wordpressdb?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC&allowPublicKeyRetrieval=true&useSSL=false
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: wpuser
+    password: password
+
+  flyway:
+    enabled: true
+    user: wpadmin
+    password: password
+
+management:
+  health:
+    readinessstate:
+      enabled: true
+    livenessstate:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      probes:
+        enabled: true
+      show-details: always
+
+logging:
+  level:
+    org.zalando.logbook: TRACE
+    org.hibernate.orm.jdbc.bind: INFO
+
+logbook:
+  filter:
+    enabled: true
+  format:
+    style: http
+  obfuscate:
+    headers:
+      - Authorization
+      - X-Secret
+    parameters:
+      - access_token
+      - password
+  predicate:
+    exclude:
+      - path: /actuator/health/**
+
+server:
+  port: 8080

@@ -1,0 +1,82 @@
+spring:
+  application:
+    name: sdjpa-wordpress
+
+  docker:
+    compose:
+      enabled: false
+      stop:
+        command: down
+
+  datasource:
+    # we are using the h2 in compatible mode with mysql
+    url: jdbc:h2:mem:sdjpa-wordpress-db;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE;MODE=MYSQL;DATABASE_TO_LOWER=TRUE;CASE_INSENSITIVE_IDENTIFIERS=TRUE
+    username: sa
+    password: password
+
+  sql:
+    init:
+      schema-locations: classpath:h2-schema.sql
+      data-locations: classpath:h2-data.sql
+      mode: always
+
+  jpa:
+    # we are using the h2 in compatible mode with mysql
+    database: mysql
+    hibernate:
+      ddl-auto: validate
+    defer-datasource-initialization: false
+    properties:
+      hibernate:
+        # we are using the h2 in compatible mode with mysql
+        dialect: org.hibernate.dialect.MySQLDialect
+        show_sql: true
+        format_sql: true
+
+  h2:
+    console:
+      enabled: true
+
+  flyway:
+    enabled: false
+
+management:
+  health:
+    readinessstate:
+      enabled: true
+    livenessstate:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      probes:
+        enabled: true
+      show-details: always
+
+logging:
+  level:
+    org.zalando.logbook: TRACE
+    org.hibernate.orm.jdbc.bind: INFO
+
+logbook:
+  filter:
+    enabled: true
+  format:
+    style: http
+  obfuscate:
+    headers:
+      - Authorization
+      - X-Secret
+    parameters:
+      - access_token
+      - password
+  predicate:
+    exclude:
+      - path: /actuator/health/**
+      - path: /h2-console/*
+
+server:
+  port: 8080
