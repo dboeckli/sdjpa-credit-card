@@ -23,6 +23,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class CreditCardRepositoryIT {
 
     final String CREDIT_CARD = "12345678900000";
+    final String CVV = "123";
 
     @Autowired
     CreditCardRepository creditCardRepository;
@@ -35,7 +36,7 @@ public class CreditCardRepositoryIT {
     void testSaveAndStoreCreditCard() {
         CreditCard creditCard = new CreditCard();
         creditCard.setCreditCardNumber(CREDIT_CARD);
-        creditCard.setCvv("123");
+        creditCard.setCvv(CVV);
         creditCard.setExpirationDate("12/2028");
 
         CreditCard savedCC = creditCardRepository.saveAndFlush(creditCard);
@@ -48,10 +49,12 @@ public class CreditCardRepositoryIT {
     }
 
     @Test
-    void testEncryptionViaInterceptor() {
+        // the credit card number is encryped/decrypted by the interceptor
+        // the cvv is not encrypted/decrypted by the listener
+    void testEncryption() {
         CreditCard creditCard = new CreditCard();
         creditCard.setCreditCardNumber(CREDIT_CARD);
-        creditCard.setCvv("123");
+        creditCard.setCvv(CVV);
         creditCard.setExpirationDate("12/2028");
 
         CreditCard savedCC = creditCardRepository.saveAndFlush(creditCard);
@@ -59,13 +62,19 @@ public class CreditCardRepositoryIT {
         // we are using the template to avoid the interceptor which would decrypt the encrypted card value.
         Map<String, Object> dbRow = jdbcTemplate.queryForMap("SELECT * FROM credit_card  WHERE id = " + savedCC.getId());
         String dbCardValue = (String) dbRow.get("credit_card_number");
+        String cvvValue = (String) dbRow.get("cvv");
         log.info("encrypted card: {}", dbCardValue);
+        log.info("encrypted cvv: {}", cvvValue);
 
         assertNotNull(dbCardValue);
         assertNotEquals(CREDIT_CARD, dbCardValue); // The encrypted credit card number should be stored in the database
+        assertNotNull(cvvValue);
+        assertNotEquals(CVV, cvvValue); // The encrypted credit card cvv should be stored in the database
         creditCardRepository.findById(savedCC.getId()).ifPresent(cc -> {
             log.info("decrypted card: {}", cc.getCreditCardNumber());
             assertEquals(CREDIT_CARD, cc.getCreditCardNumber()); // The decrypted credit card number should be retrieved from the database
+            log.info("decrypted cvv: {}", cc.getCvv());
+            assertEquals(CVV, cc.getCvv());
         });
     }
 
