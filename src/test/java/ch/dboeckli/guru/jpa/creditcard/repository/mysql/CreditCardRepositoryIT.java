@@ -2,35 +2,40 @@ package ch.dboeckli.guru.jpa.creditcard.repository.mysql;
 
 import ch.dboeckli.guru.jpa.creditcard.domain.CreditCard;
 import ch.dboeckli.guru.jpa.creditcard.repository.CreditCardRepository;
+import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 
+@SpringBootTest
 @ActiveProfiles("test_mysql")
-@DirtiesContext
-@DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)  // to assure that it is not replaced with h2
+public class CreditCardRepositoryIT {
 
-class CreditCardRepositoryIT {
+    final String CREDIT_CARD = "12345678900000";
 
     @Autowired
     CreditCardRepository creditCardRepository;
 
     @Test
-    void testJpaTestSplice() {
-        long countBefore = creditCardRepository.count();
+    @Transactional
+    void testSaveAndStoreCreditCard() {
+        CreditCard creditCard = new CreditCard();
+        creditCard.setCreditCardNumber(CREDIT_CARD);
+        creditCard.setCvv("123");
+        creditCard.setExpirationDate("12/2028");
 
-        creditCardRepository.save(new CreditCard());
+        CreditCard savedCC = creditCardRepository.saveAndFlush(creditCard);
 
-        long countAfter = creditCardRepository.count();
+        System.out.println("Getting CC from database");
 
-        assertEquals(0, countBefore);
-        assertEquals(1, countAfter);
+        CreditCard fetchedCC = creditCardRepository.findById(savedCC.getId()).orElseThrow(() -> new AssertionError("Credit card not found"));
+
+        assertThat(savedCC.getCreditCardNumber()).isEqualTo(fetchedCC.getCreditCardNumber());
     }
 
 }
