@@ -1,7 +1,7 @@
 package ch.dboeckli.guru.jpa.creditcard.interceptor;
 
 import ch.dboeckli.guru.jpa.creditcard.domain.CreditCard;
-import ch.dboeckli.guru.jpa.creditcard.service.EncryptionService;
+import ch.dboeckli.guru.jpa.creditcard.util.EncryptionUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.CallbackException;
@@ -14,8 +14,6 @@ import org.springframework.stereotype.Component;
 @Slf4j
 public class EncryptionInterceptor implements Interceptor {
 
-    private final EncryptionService encryptionService;
-
     @Override
     public boolean onLoad(Object entity, Object id, Object[] state, String[] propertyNames, Type[] types) {
         if (entity instanceof CreditCard) {
@@ -24,7 +22,7 @@ public class EncryptionInterceptor implements Interceptor {
                     String encryptedValue = (String) state[i];
                     if (encryptedValue != null && !encryptedValue.isEmpty()) {
                         log.info("Decrypting credit card number: {}", encryptedValue);
-                        state[i] = encryptionService.decrypt(encryptedValue);
+                        state[i] = EncryptionUtil.decrypt(encryptedValue);
                         return true;
                     }
                     break;
@@ -42,7 +40,7 @@ public class EncryptionInterceptor implements Interceptor {
                     String currentValue = (String) state[i];
                     if (currentValue != null && !currentValue.isEmpty()) {
                         log.info("Encrypting credit card number: {}", currentValue);
-                        state[i] = encryptionService.encrypt(currentValue);
+                        state[i] = EncryptionUtil.encrypt(currentValue);
                         return true;
                     }
                     break;
@@ -61,7 +59,7 @@ public class EncryptionInterceptor implements Interceptor {
                     String currentValue = (String) currentState[i];
                     if (currentValue != null && !currentValue.isEmpty()) {
                         log.info("Encrypting credit card number: {}", currentValue);
-                        currentState[i] = encryptionService.encrypt(currentValue);
+                        currentState[i] = EncryptionUtil.encrypt(currentValue);
                         modified = true;
                     }
                     break;
