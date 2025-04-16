@@ -24,4 +24,7 @@ public class CreditCard {
 
     private String expirationDate;
 
+    @Convert(converter = CreditCardConverter.class)
+    private String secret;
+
 }

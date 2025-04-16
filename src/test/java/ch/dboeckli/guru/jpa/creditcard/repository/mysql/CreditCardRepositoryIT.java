@@ -25,6 +25,7 @@ public class CreditCardRepositoryIT {
     final String CREDIT_CARD = "12345678900000";
     final String CVV = "123";
     final String EXPIRATION_DATE = "12/2028";
+    final String SECRET = "very-secret";
 
     @Autowired
     CreditCardRepository creditCardRepository;
@@ -39,10 +40,11 @@ public class CreditCardRepositoryIT {
         creditCard.setCreditCardNumber(CREDIT_CARD);
         creditCard.setCvv(CVV);
         creditCard.setExpirationDate(EXPIRATION_DATE);
+        creditCard.setSecret(SECRET);
 
         CreditCard savedCC = creditCardRepository.saveAndFlush(creditCard);
 
-        System.out.println("Getting CC from database");
+        log.info("Getting CC from database");
 
         CreditCard fetchedCC = creditCardRepository.findById(savedCC.getId()).orElseThrow(() -> new AssertionError("Credit card not found"));
 
@@ -53,11 +55,13 @@ public class CreditCardRepositoryIT {
         // the credit card number is encryped/decrypted by the interceptors
         // the cvv is encrypted/decrypted by the listeners
         // the expiration date is encrypted/decrypted by the callbacks
+        // the secret is encrypted/decrypted by the converter
     void testEncryption() {
         CreditCard creditCard = new CreditCard();
         creditCard.setCreditCardNumber(CREDIT_CARD);
         creditCard.setCvv(CVV);
         creditCard.setExpirationDate(EXPIRATION_DATE);
+        creditCard.setSecret(SECRET);
 
         CreditCard savedCC = creditCardRepository.saveAndFlush(creditCard);
 
@@ -66,14 +70,17 @@ public class CreditCardRepositoryIT {
         String dbCardValue = (String) dbRow.get("credit_card_number");
         String cvvValue = (String) dbRow.get("cvv");
         String expirationDateValue = (String) dbRow.get("expiration_date");
+        String secretValue = (String) dbRow.get("secret");
         log.info("encrypted card: {}", dbCardValue);
         log.info("encrypted cvv: {}", cvvValue);
         log.info("encrypted expiration_date: {}", expirationDateValue);
+        log.info("encrypted secret: {}", secretValue);
 
         assertNotNull(dbCardValue);
         assertNotEquals(CREDIT_CARD, dbCardValue); // The encrypted credit card number should be stored in the database
         assertNotNull(cvvValue);
         assertNotEquals(CVV, cvvValue); // The encrypted credit card cvv should be stored in the database
+        assertNotEquals(SECRET, secretValue);
         creditCardRepository.findById(savedCC.getId()).ifPresent(cc -> {
             log.info("decrypted card: {}", cc.getCreditCardNumber());
             assertEquals(CREDIT_CARD, cc.getCreditCardNumber()); // The decrypted credit card number should be retrieved from the database
@@ -81,6 +88,8 @@ public class CreditCardRepositoryIT {
             assertEquals(CVV, cc.getCvv());
             log.info("expiration date: {}", cc.getExpirationDate());
             assertEquals(EXPIRATION_DATE, cc.getExpirationDate());
+            log.info("secret: {}", cc.getSecret());
+            assertEquals(SECRET, cc.getSecret());
         });
     }
 
