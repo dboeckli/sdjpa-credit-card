@@ -8,8 +8,8 @@
         <option name="value" value="true" />
       </param>
     </additionalParameters>
-    <module name="sdjpa-wordpress" />
-    <option name="SPRING_BOOT_MAIN_CLASS" value="ch.dboeckli.guru.jpa.wordpress.Spring6Application" />
+    <module name="sdjpa-credit-card" />
+    <option name="SPRING_BOOT_MAIN_CLASS" value="ch.dboeckli.guru.jpa.creditcard.Spring6Application" />
     <method v="2">
       <option name="Make" enabled="true" />
     </method>

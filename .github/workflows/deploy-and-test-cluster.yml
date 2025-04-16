@@ -38,15 +38,15 @@ jobs:
       - name: Deploy application
         run: |
           # Replace the version placeholder in the deployment manifest
-          sed -i 's|image: domboeckli/sdjpa-wordpress:[^[:space:]]*|image: domboeckli/sdjpa-wordpress:${{ inputs.version }}|g' k8s/app.yml
+          sed -i 's|image: domboeckli/sdjpa-credit-card:[^[:space:]]*|image: domboeckli/sdjpa-credit-card:${{ inputs.version }}|g' k8s/app.yml
           kubectl apply -f k8s/
 
       - name: Wait for Pods to be ready
         run: |
-          if ! kubectl wait --for=condition=ready pod -l app=sdjpa-wordpress --timeout=180s; then
+          if ! kubectl wait --for=condition=ready pod -l app=sdjpa-credit-card --timeout=180s; then
             echo "Pod did not become ready within 180 seconds. Displaying logs:"
-            kubectl get pods -l app=sdjpa-wordpress
-            POD_NAME=$(kubectl get pods -l app=sdjpa-wordpress -o jsonpath="{.items[0].metadata.name}")
+            kubectl get pods -l app=sdjpa-credit-card
+            POD_NAME=$(kubectl get pods -l app=sdjpa-credit-card -o jsonpath="{.items[0].metadata.name}")
             kubectl logs $POD_NAME
             echo "Describing the pod:"
             kubectl describe pod $POD_NAME
@@ -59,7 +59,7 @@ jobs:
       - name: Display Deployment Information
         run: |
           echo "Deployment Information:"
-          kubectl get deployment sdjpa-wordpress -o yaml
+          kubectl get deployment sdjpa-credit-card -o yaml
           
           
 

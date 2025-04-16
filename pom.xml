@@ -9,7 +9,7 @@
     </parent>
 
     <groupId>ch.dboeckli.guru.springframework.jpa</groupId>
-    <artifactId>sdjpa-wordpress</artifactId>
+    <artifactId>sdjpa-credit-card</artifactId>
     <version>0.0.1-SNAPSHOT</version>
 
     <name>${project.artifactId}</name>

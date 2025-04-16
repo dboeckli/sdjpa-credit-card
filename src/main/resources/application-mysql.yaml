@@ -1,6 +1,6 @@
 spring:
   application:
-    name: sdjpa-wordpress
+    name: sdjpa-credit-card
 
   docker:
     compose:
@@ -24,14 +24,14 @@ spring:
         format_sql: true
 
   datasource:
-    url: jdbc:mysql://127.0.0.1:3306/wordpressdb?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC&allowPublicKeyRetrieval=true&useSSL=false
+    url: jdbc:mysql://127.0.0.1:3306/paymentdb?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC&allowPublicKeyRetrieval=true&useSSL=false
     driver-class-name: com.mysql.cj.jdbc.Driver
-    username: wpuser
+    username: paymentuser
     password: password
 
   flyway:
     enabled: true
-    user: wpadmin
+    user: paymentadmin
     password: password
 
 management:

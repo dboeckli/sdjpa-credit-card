@@ -1,4 +1,4 @@
-package ch.dboeckli.guru.jpa.wordpress;
+package ch.dboeckli.guru.jpa.creditcard;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;

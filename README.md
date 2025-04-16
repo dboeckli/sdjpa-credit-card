@@ -2,23 +2,28 @@
 
 This repository contains source code examples to support my course Spring Data JPA and Hibernate Beginner to Guru
 
-## JPA Legacy Database Mapping
+## JPA Interceptors, Listener, Callbacks
 
-This project demonstrates JPA legacy database mapping using the WordPress database schema. We're using Spring Data JPA to map and interact with an existing WordPress database structure, showcasing how to work with legacy databases in modern Java applications.
+This project demonstrates the functionality of JPA/Hibernate Interceptors, Listeners, and Callbacks:
 
-Key features of this demonstration include:
+1. **JPA Entity Listeners**: These allow the execution of callback methods at specific lifecycle events of an entity.
+   Example: `@EntityListeners(AuditTrailListener.class)`
 
-1. Mapping WordPress tables to JPA entities
-2. Handling WordPress-specific data types and relationships
-3. Implementing custom queries for WordPress data structures
-4. Demonstrating how to work with legacy database schemas without modifying the original structure
+2. **JPA Callbacks**: Methods defined directly in the entity class that are called on certain events.
+   Examples: `@PrePersist`, `@PostLoad`, `@PreUpdate`
 
-## Additional Resources
+3. **Hibernate Interceptors**: Offer more comprehensive possibilities for manipulating entities during various database operations.
+   Example: Implementation of the `Interceptor` interface
 
-For more information about transactions in database systems and Spring Data JPA, please refer to the following documents in the `doc` folder:
+These mechanisms are used in the project to:
+- Automatically set timestamps for creation and updates
+- Create audit trails
+- Validate or transform data before saving
+- Execute additional logic during database operations
 
-- [Overview of DB Transactions](doc/OverviewOfDBTransactions.pdf): This document provides a comprehensive overview of database transactions.
-- [Spring Data JPA Transactions](doc/SpringDataJPATransactions.pdf): This guide offers insights into how transactions work specifically with Spring Data JPA.
+For more information please refer to the following documents in the `doc` folder:
+
+- [ListenersAndInterceptors](doc/ListenersAndInterceptors.pdf): This document provides a comprehensive overview of database transactions.
 
 
 ## Flyway
