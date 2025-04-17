@@ -11,7 +11,7 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class InterceptorRegistration implements HibernatePropertiesCustomizer {
 
-    EncryptionInterceptor interceptor;
+    private final EncryptionInterceptor interceptor;
 
     @Override
     public void customize(Map<String, Object> hibernateProperties) {
