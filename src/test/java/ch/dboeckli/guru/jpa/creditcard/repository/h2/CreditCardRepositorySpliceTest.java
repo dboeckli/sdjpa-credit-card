@@ -14,8 +14,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 class CreditCardRepositorySpliceTest {
 
-    final String CREDIT_CARD = "12345678900000";
-
     @Autowired
     CreditCardRepository creditCardRepository;
 
