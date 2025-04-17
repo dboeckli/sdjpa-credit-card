@@ -31,7 +31,7 @@ public class PreUpdateListener implements PreUpdateEventListener {
         int cvvIndex = getCvvIndex(propertyNames);
         if (cvvIndex != -1) {
             String currentCvv = (String) currentState[cvvIndex];
-            if (currentCvv != null && !currentCvv.equals(creditCard.getCvv())) {
+            if (currentCvv != null && !EncryptionUtil.isBase64Encoded(creditCard.getCvv())) {
                 try {
                     String encryptedCvv = EncryptionUtil.encrypt(creditCard.getCvv());
                     creditCard.setCvv(encryptedCvv); // Update the credit card with the encrypted CVV

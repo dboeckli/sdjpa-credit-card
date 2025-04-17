@@ -31,7 +31,7 @@ public class EncryptionUtil {
         return new String(Base64.getDecoder().decode(encryptedText));
     }
 
-    private boolean isBase64Encoded(String text) {
+    public boolean isBase64Encoded(String text) {
         return BASE64_PATTERN.matcher(text).matches();
     }
 }

@@ -11,8 +11,8 @@ class EncryptionUtilTest {
 
     @Test
     void encryptDecrypt() {
-        String encrypted_value = EncryptionUtil.encrypt(TEST_ENCRYPTED_VALUE);
-        assertEquals(TEST_ENCRYPTED_VALUE, EncryptionUtil.decrypt(encrypted_value));
+        String encryptedValue = EncryptionUtil.encrypt(TEST_ENCRYPTED_VALUE);
+        assertEquals(TEST_ENCRYPTED_VALUE, EncryptionUtil.decrypt(encryptedValue));
     }
 
     @Test
