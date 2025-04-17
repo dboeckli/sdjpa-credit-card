@@ -21,8 +21,18 @@ class EncryptionUtilTest {
     }
 
     @Test
+    void encryptEmpty() {
+        assertEquals("", EncryptionUtil.encrypt(""));
+    }
+
+    @Test
     void decryptNull() {
         assertNull(EncryptionUtil.decrypt(null));
+    }
+
+    @Test
+    void decryptEmpty() {
+        assertEquals("", EncryptionUtil.decrypt(""));
     }
 
     @Test
