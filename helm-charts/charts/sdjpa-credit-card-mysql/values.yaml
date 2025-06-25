@@ -1,0 +1,17 @@
+global:
+  namespace: sdjpa-credit-card-mysql
+
+mysql:
+  port: 3306
+  targetPort: 3306
+  nodePort: 30306
+  
+  database: "paymentdb"
+
+  adminUser: paymentadmin
+  adminPassword: password
+
+  user: paymentuser
+  password: password
+
+  rootPassword: password
