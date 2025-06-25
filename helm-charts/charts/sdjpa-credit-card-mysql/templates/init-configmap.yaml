@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "sdjpa-credit-card-mysql.fullname" . }}-init
+  namespace: {{ .Values.global.namespace }}
+  labels:
+    {{- include "sdjpa-credit-card-mysql.labels" . | nindent 4 }}
+data:
+  init.sql: |-
+    DROP DATABASE IF EXISTS {{ .Values.mysql.database }};
+    DROP USER IF EXISTS `{{ .Values.mysql.adminUser }}`@`%`;
+    DROP USER IF EXISTS `{{ .Values.mysql.user }}`@`%`;
+    CREATE DATABASE IF NOT EXISTS {{ .Values.mysql.database }} CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+    CREATE USER IF NOT EXISTS `{{ .Values.mysql.adminUser }}`@`%` IDENTIFIED BY '{{ .Values.mysql.adminPassword }}';
+    GRANT SELECT, INSERT, UPDATE, DELETE, CREATE, DROP, REFERENCES, INDEX, ALTER, EXECUTE, CREATE VIEW, SHOW VIEW,
+      CREATE ROUTINE, ALTER ROUTINE, EVENT, TRIGGER ON `{{ .Values.mysql.database }}`.* TO `{{ .Values.mysql.adminUser }}`@`%`;
+    CREATE USER IF NOT EXISTS `{{ .Values.mysql.user }}`@`%` IDENTIFIED BY '{{ .Values.mysql.password }}';
+    GRANT SELECT, INSERT, UPDATE, DELETE, SHOW VIEW ON `{{ .Values.mysql.database }}`.* TO `{{ .Values.mysql.user }}`@`%`;
+    FLUSH PRIVILEGES;

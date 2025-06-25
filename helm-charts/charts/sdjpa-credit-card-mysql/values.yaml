@@ -1,0 +1,17 @@
+global:
+  namespace: sdjpa-credit-card-mysql
+
+mysql:
+  port: 3306
+  targetPort: 3306
+  nodePort: 30306
+  
+  database: "bookdb"
+
+  adminUser: bookadmin
+  adminPassword: password
+
+  user: bookuser
+  password: password
+
+  rootPassword: password
