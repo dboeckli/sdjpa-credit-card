@@ -6,12 +6,12 @@ mysql:
   targetPort: 3306
   nodePort: 30306
   
-  database: "bookdb"
+  database: "paymentdb"
 
-  adminUser: bookadmin
+  adminUser: paymentadmin
   adminPassword: password
 
-  user: bookuser
+  user: paymentuser
   password: password
 
   rootPassword: password

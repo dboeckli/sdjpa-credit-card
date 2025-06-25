@@ -44,13 +44,13 @@ probes:
 mysql:
   enabled: true
 
-  database: bookdb
+  database: paymentdb
   port: 3306
 
-  adminUser: bookadmin
+  adminUser: paymentadmin
   adminPassword: password
 
-  user: bookuser
+  user: paymentuser
   password: password
 
   rootPassword: password
