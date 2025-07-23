@@ -3,4 +3,4 @@ name: sdjpa-credit-card-mysql
 description: A Helm subchart for Mysql
 type: application
 version: @helm.chart.version@
-appVersion: "8.4.5"
+appVersion: "8.4.6"
