@@ -17,12 +17,13 @@ spec:
     spec:
       initContainers:
         - name: wait-for-mysql
-          image: busybox:1.37.0
+          image: {{.Values.busyboxImage.repository }}:{{.Values.busyboxImage.tag }}
+          imagePullPolicy: {{.Values.busyboxImage.pullPolicy }}
           command: [ 'sh', '-c', 'until nc -z {{ .Values.mysql.serviceFQDN  }} {{ .Values.mysql.port }}; do echo "[busybox: wait-for-mysql] waiting for mysql"; sleep 2; done; echo "[busybox: wait-for-mysql] mysql is available"' ]
       containers:
         - name: {{ .Chart.Name }}
-          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
-          imagePullPolicy: IfNotPresent
+          image: "{{ .Values.image.registry }}/@project.artifactId@:{{ .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
           env:
             - name: JAVA_TIMEZONE
               value: "{{ .Values.global.timezone }}"

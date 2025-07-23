@@ -15,3 +15,8 @@ mysql:
   password: password
 
   rootPassword: password
+
+mysqlImage:
+  repository: mysql
+  tag: "8.4.6"
+  pullPolicy: IfNotPresent
