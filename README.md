@@ -1,6 +1,5 @@
 # Spring Data JPA Wordpress
 
-This repository contains source code examples to support my course Spring Data JPA and Hibernate Beginner to Guru
 
 ## JPA Interceptors, Listener, Callbacks
 
