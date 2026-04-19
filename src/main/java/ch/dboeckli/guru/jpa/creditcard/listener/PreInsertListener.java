@@ -33,10 +33,12 @@ public class PreInsertListener implements PreInsertEventListener {
                 state[cvvIndex] = encryptedCvv;
                 creditCard.setCvv(encryptedCvv);
                 log.info("Successfully encrypted CVV for credit card: {}", creditCard);
-            } else {
+            }
+            else {
                 log.warn("CVV property not found for credit card: {}", creditCard);
             }
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             log.error("Error encrypting CVV for credit card: {}", creditCard, e);
         }
     }
@@ -54,4 +56,5 @@ public class PreInsertListener implements PreInsertEventListener {
         }
         return -1;
     }
+
 }

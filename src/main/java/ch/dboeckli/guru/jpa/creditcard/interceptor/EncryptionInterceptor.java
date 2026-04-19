@@ -33,7 +33,8 @@ public class EncryptionInterceptor implements Interceptor {
     }
 
     @Override
-    public boolean onPersist(Object entity, Object id, Object[] state, String[] propertyNames, Type[] types) throws CallbackException {
+    public boolean onPersist(Object entity, Object id, Object[] state, String[] propertyNames, Type[] types)
+            throws CallbackException {
         if (entity instanceof CreditCard) {
             for (int i = 0; i < propertyNames.length; i++) {
                 if ("creditCardNumber".equals(propertyNames[i])) {
@@ -51,7 +52,8 @@ public class EncryptionInterceptor implements Interceptor {
     }
 
     @Override
-    public boolean onFlushDirty(Object entity, Object id, Object[] currentState, Object[] previousState, String[] propertyNames, Type[] types) {
+    public boolean onFlushDirty(Object entity, Object id, Object[] currentState, Object[] previousState,
+            String[] propertyNames, Type[] types) {
         if (entity instanceof CreditCard) {
             boolean modified = false;
             for (int i = 0; i < propertyNames.length; i++) {

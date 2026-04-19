@@ -9,7 +9,8 @@ import java.util.regex.Pattern;
 @UtilityClass
 public class EncryptionUtil {
 
-    private static final Pattern BASE64_PATTERN = Pattern.compile("^([A-Za-z0-9+/]{4})*([A-Za-z0-9+/]{3}=|[A-Za-z0-9+/]{2}==)?$");
+    private static final Pattern BASE64_PATTERN = Pattern
+        .compile("^([A-Za-z0-9+/]{4})*([A-Za-z0-9+/]{3}=|[A-Za-z0-9+/]{2}==)?$");
 
     public static String encrypt(String freeText) {
         if (freeText == null || freeText.isEmpty()) {
@@ -34,4 +35,5 @@ public class EncryptionUtil {
     public boolean isBase64Encoded(String text) {
         return BASE64_PATTERN.matcher(text).matches();
     }
+
 }

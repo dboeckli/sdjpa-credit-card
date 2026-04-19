@@ -21,4 +21,5 @@ public class CreditCardJPACallback {
         log.info("Post Load was called for CreditCard: {}", creditCard);
         creditCard.setExpirationDate(EncryptionUtil.decrypt(creditCard.getExpirationDate()));
     }
+
 }

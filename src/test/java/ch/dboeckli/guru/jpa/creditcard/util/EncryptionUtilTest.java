@@ -45,5 +45,4 @@ class EncryptionUtilTest {
         assertEquals("MTIzNDU2Nzg5MDAwMDA=", EncryptionUtil.encrypt("MTIzNDU2Nzg5MDAwMDA="));
     }
 
-
 }
