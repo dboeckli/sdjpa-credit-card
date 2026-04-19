@@ -17,4 +17,5 @@ public class InterceptorRegistration implements HibernatePropertiesCustomizer {
     public void customize(Map<String, Object> hibernateProperties) {
         hibernateProperties.put("hibernate.session_factory.interceptor", interceptor);
     }
+
 }

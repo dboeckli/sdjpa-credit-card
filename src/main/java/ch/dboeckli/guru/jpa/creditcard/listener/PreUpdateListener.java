@@ -34,14 +34,17 @@ public class PreUpdateListener implements PreUpdateEventListener {
             if (currentCvv != null && !EncryptionUtil.isBase64Encoded(creditCard.getCvv())) {
                 try {
                     String encryptedCvv = EncryptionUtil.encrypt(creditCard.getCvv());
-                    creditCard.setCvv(encryptedCvv); // Update the credit card with the encrypted CVV
+                    creditCard.setCvv(encryptedCvv); // Update the credit card with the
+                                                     // encrypted CVV
                     currentState[cvvIndex] = encryptedCvv;
                     log.info("Successfully encrypted updated CVV for credit card: {}", creditCard.getId());
-                } catch (Exception e) {
+                }
+                catch (Exception e) {
                     log.error("Error encrypting updated CVV for credit card: {}", creditCard.getId(), e);
                 }
             }
-        } else {
+        }
+        else {
             log.warn("CVV property not found for credit card: {}", creditCard.getId());
         }
     }
@@ -54,4 +57,5 @@ public class PreUpdateListener implements PreUpdateEventListener {
         }
         return -1;
     }
+
 }

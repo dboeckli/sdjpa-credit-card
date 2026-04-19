@@ -18,18 +18,21 @@ import org.springframework.stereotype.Component;
 public class ListenerRegistration implements BeanPostProcessor {
 
     private final PostLoadListener postLoadListener;
+
     private final PreInsertListener preInsertListener;
+
     private final PreUpdateListener preUpdateListener;
 
     @Override
-    public Object postProcessBeforeInitialization(@NonNull Object bean, @NonNull String beanName) throws BeansException {
+    public Object postProcessBeforeInitialization(@NonNull Object bean, @NonNull String beanName)
+            throws BeansException {
         return BeanPostProcessor.super.postProcessBeforeInitialization(bean, beanName);
     }
 
     @Override
     public Object postProcessAfterInitialization(@NonNull Object bean, @NonNull String beanName) throws BeansException {
 
-        if (bean instanceof LocalContainerEntityManagerFactoryBean lemf){
+        if (bean instanceof LocalContainerEntityManagerFactoryBean lemf) {
             SessionFactoryImpl sessionFactory = (SessionFactoryImpl) lemf.getNativeEntityManagerFactory();
             EventListenerRegistry registry = sessionFactory.getServiceRegistry()
                 .getService(EventListenerRegistry.class);
@@ -41,4 +44,5 @@ public class ListenerRegistration implements BeanPostProcessor {
 
         return bean;
     }
+
 }

@@ -29,8 +29,10 @@ public class PostLoadListener implements PostLoadEventListener {
                 creditCard.setCvv(decryptedCvv);
                 log.info("Successfully decrypted CVV for credit card: {}", creditCard.getId());
             }
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             log.error("Error decrypting CVV for credit card: {}", creditCard.getId(), e);
         }
     }
+
 }

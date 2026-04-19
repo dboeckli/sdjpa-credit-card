@@ -61,7 +61,8 @@ class ActuatorInfoTest {
         try {
             Object json = OBJECT_MAPPER.readValue(body, Object.class);
             return OBJECT_MAPPER.writerWithDefaultPrettyPrinter().writeValueAsString(json);
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             // Falls kein valides JSON: unverändert zurückgeben
             return body;
         }
