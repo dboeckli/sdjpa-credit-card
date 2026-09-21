@@ -1,3 +1,6 @@
+nameOverride: "sdjpa-credit-card"
+fullnameOverride: "sdjpa-credit-card"
+
 global:
   timezone: Europe/Zurich
   timezonePath: /etc/localtime
@@ -45,6 +48,7 @@ probes:
 
 mysql:
   enabled: true
+  fullnameOverride: "sdjpa-credit-card-mysql"
 
   database: paymentdb
   port: 3306
@@ -57,7 +61,7 @@ mysql:
 
   rootPassword: password
 
-  serviceFQDN: "sdjpa-credit-card-sdjpa-credit-card-mysql.sdjpa-credit-card.svc.cluster.local"
+  serviceFQDN: "sdjpa-credit-card-mysql.sdjpa-credit-card.svc.cluster.local"
 
 ingress:
   enabled: false
